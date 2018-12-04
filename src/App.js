@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleButtonAction } from './app.actions';
+
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
+    console.warn(this.props);
+    const { toggleButton, toggleButtonAction } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -11,18 +16,23 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+            <button onClick={toggleButtonAction}>
+              Change Redux Store Value
+            </button>
+            Learn React&nbsp;
+            { toggleButton ? "I am set to true" : "I am set to False" }
         </header>
       </div>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  ...state.app
+});
 
-export default App;
+export default connect(
+  mapStateToProps,
+  {
+    toggleButtonAction
+  }
+)(App);
